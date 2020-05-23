@@ -7,6 +7,7 @@ using AutoMapper;
 using Lern.API.Entities;
 using Lern.API.Helpers;
 using Lern.API.Models.Course;
+using Lern.API.Models.Module;
 using Lern.API.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,15 +22,18 @@ namespace Lern.API.Controllers
     public class CourseController : ControllerBase
     {
         private ICourseService _courseService;
+        private IModuleService _moduleService;
         private IMapper _mapper;
         private readonly IOptions<AppSettings> _appSettings;
 
         public CourseController(
             ICourseService courseService,
+            IModuleService moduleService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
             _courseService = courseService;
+            _moduleService = moduleService;
             _mapper = mapper;
             _appSettings = appSettings;
         }
@@ -37,7 +41,7 @@ namespace Lern.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody]CourseCreateModel model)
         {
-            if (!_courseService.CourseTitleIsNotTaken(model.Title))
+            if (_courseService.CourseTitleIsTaken(model.Title))
                 return BadRequest(new { message = "Title already taken" });
 
             var courseModel = _mapper.Map<Course>(model);
@@ -69,6 +73,11 @@ namespace Lern.API.Controllers
         {
             var course = _courseService.GetById(id);
             var model = _mapper.Map<CourseModel>(course);
+
+            var moduleQuery = _moduleService.GetModulesByCourseId(model.Id);
+            var modules = _mapper.Map<IEnumerable<ModuleModel>>(moduleQuery).ToArray();
+            model.Modules = modules;
+
             return Ok(model);
         }
 

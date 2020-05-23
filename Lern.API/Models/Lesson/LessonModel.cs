@@ -15,11 +15,7 @@ namespace Lern.API.Models.Lesson
 
         public int UserId { get; set; }
 
-        public UserModel User { get; set; }
-
         public int ModuleId { get; set; }
-
-        public ModuleModel Module { get; set; }
 
         public string Body { get; set; }
 

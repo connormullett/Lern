@@ -76,7 +76,7 @@ namespace Lern.API.Services
             return _context.SaveChanges() == 1;
         }
 
-        public bool CourseTitleIsNotTaken(string title)
+        public bool CourseTitleIsTaken(string title)
         {
             if (_context.Courses.Where(x => x.Title == title) == null)
                 return true;

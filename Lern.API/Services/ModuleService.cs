@@ -37,7 +37,7 @@ namespace Lern.API.Services
         public bool Delete(int id)
         {
             var module = _context.Modules.Find(id);
-            if (module != null)
+            if (module == null)
                 throw new AppException("Module not found");
 
             _context.Modules.Remove(module);
@@ -75,6 +75,15 @@ namespace Lern.API.Services
 
             if (module == null)
                 throw new AppException("Module not found");
+
+            if (!string.IsNullOrEmpty(moduleParam.Description))
+                module.Description = moduleParam.Description;
+
+            if (!string.IsNullOrEmpty(moduleParam.Title))
+                module.Title = moduleParam.Title;
+
+            module.IsPublic = moduleParam.IsPublic;
+            module.ModifiedAt = DateTime.UtcNow;
 
             _context.Modules.Update(module);
             return _context.SaveChanges() == 1;

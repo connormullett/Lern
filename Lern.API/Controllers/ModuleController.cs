@@ -71,8 +71,7 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("public")]
-        [HttpGet("{userId}")]
+        [HttpGet("public/{userId}")]
         public IActionResult GetPublicByUserId(int userId)
         {
             var modules = _moduleService.GetPublicByUserId(userId);
@@ -81,8 +80,7 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("course")]
-        [HttpGet("{courseId}")]
+        [HttpGet("course/{courseId}")]
         public IActionResult GetModulesByCourseId(int courseId)
         {
             var modules = _moduleService.GetModulesByCourseId(courseId);
@@ -93,11 +91,23 @@ namespace Lern.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]ModuleUpdateModel model)
         {
-            if (GetUserId() != id)
+            var moduleModel = _moduleService.GetById(id);
+
+            if (moduleModel == null)
+                return BadRequest(new { message = "Module not found" });
+
+            if (GetUserId() != moduleModel.UserId)
                 return Unauthorized();
 
             var module = _mapper.Map<Module>(model);
-            module.UserId = id;
+            module.UserId = moduleModel.UserId;
+
+            if (model.IsPublic == null)
+                module.IsPublic = moduleModel.IsPublic;
+            else
+                module.IsPublic = (bool)model.IsPublic;
+
+            module.Id = id;
 
             try
             {

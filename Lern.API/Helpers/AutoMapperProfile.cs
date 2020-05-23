@@ -28,7 +28,7 @@ namespace Lern.API.Helpers
             CreateMap<LessonModel, Lesson>();
 
             CreateMap<ModuleCreateModel, Module>();
-            CreateMap<ModuleListModel, Module>();
+            CreateMap<Module, ModuleListModel>();
             CreateMap<ModuleUpdateModel, Module>();
             CreateMap<ModuleModel, Module>();
             CreateMap<Module, ModuleModel>();
