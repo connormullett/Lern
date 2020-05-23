@@ -77,8 +77,7 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("public")]
-        [HttpGet("{userId}")]
+        [HttpGet("public/{userId}")]
         public IActionResult GetPublicByUserId(int userId)
         {
             var lessons = _lessonService.GetPublicByUserId(userId);
@@ -87,8 +86,7 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("module")]
-        [HttpGet("{moduleId}")]
+        [HttpGet("module/{moduleId}")]
         public IActionResult GetLessonsByModuleId(int moduleId)
         {
             var lessons = _lessonService.GetLessonsByModuleId(moduleId);

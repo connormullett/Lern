@@ -7,6 +7,7 @@ using AutoMapper;
 using Lern.API.Entities;
 using Lern.API.Helpers;
 using Lern.API.Models;
+using Lern.API.Models.Lesson;
 using Lern.API.Models.Module;
 using Lern.API.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -22,14 +23,17 @@ namespace Lern.API.Controllers
     public class ModuleController : ControllerBase
     {
         private IModuleService _moduleService;
+        private ILessonService _lessonService;
         private IMapper _mapper;
         private readonly IOptions<AppSettings> _appSettings;
 
         public ModuleController(
             IModuleService moduleService,
+            ILessonService lessonService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
+            _lessonService = lessonService;
             _moduleService = moduleService;
             _mapper = mapper;
             _appSettings = appSettings;
@@ -67,6 +71,11 @@ namespace Lern.API.Controllers
         {
             var module = _moduleService.GetById(id);
             var model = _mapper.Map<ModuleModel>(module);
+
+            var lessonQuery = _lessonService.GetLessonsByModuleId(id);
+            var lessons = _mapper.Map<IEnumerable<LessonModel>>(lessonQuery).ToArray();
+            model.Lessons = lessons;
+
             return Ok(model);
         }
 
@@ -85,6 +94,7 @@ namespace Lern.API.Controllers
         {
             var modules = _moduleService.GetModulesByCourseId(courseId);
             var model = _mapper.Map<IEnumerable<ModuleListModel>>(modules);
+
             return Ok(model);
         }
 

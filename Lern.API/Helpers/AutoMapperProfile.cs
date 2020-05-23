@@ -17,6 +17,7 @@ namespace Lern.API.Helpers
         public AutoMapperProfile()
         {
             CreateMap<User, UserModel>();
+            CreateMap<User, UserPrivateModel>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
             CreateMap<User, AuthenticateModel>();

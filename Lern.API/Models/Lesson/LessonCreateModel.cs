@@ -14,6 +14,9 @@ namespace Lern.API.Models.Lesson
         [Required]
         public string Body { get; set; }
 
-        public bool IsPublic { get; set; } = false;
+        public bool IsPublic { get; set; }
+
+        [Required]
+        public int ModuleId { get; set; }
     }
 }
