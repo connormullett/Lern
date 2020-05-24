@@ -41,19 +41,24 @@ namespace Lern.API.Services
             return _context.SaveChanges() == 1;
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<Course> GetAllPublicCourses()
         {
             return _context.Courses.Where(x => x.IsPublic);
+        }
+
+        public IEnumerable<Course> GetAll()
+        {
+            return _context.Courses;
+        }
+
+        public IEnumerable<Course> GetUserCourses(int userId)
+        {
+            return _context.Courses.Where(x => x.IsPublic && x.UserId == userId);
         }
 
         public Course GetById(int id)
         {
             return _context.Courses.Find(id);
-        }
-
-        public IEnumerable<Course> GetPublicByUserId(int userId)
-        {
-            return _context.Courses.Where(x => x.IsPublic && x.UserId == userId);
         }
 
         public bool Update(Course courseParam)
@@ -83,9 +88,9 @@ namespace Lern.API.Services
             return false;
         }
 
-        public object GetByUserId(int userId)
+        public IEnumerable<Course> GetByUserId(int userId)
         {
-            return _context.Courses.Where(x => x.UserId == userId);
+            return _context.Courses.Where(x => x.UserId == userId && x.IsPublic == true);
         }
     }
 }

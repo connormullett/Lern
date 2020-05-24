@@ -59,16 +59,6 @@ namespace Lern.API.Services
             return _context.Modules.Where(x => x.CourseId == courseId);
         }
 
-        public IEnumerable<Module> GetPublicByCourseId(int courseId)
-        {
-            return _context.Modules.Where(x => x.CourseId == courseId && x.IsPublic);
-        }
-
-        public IEnumerable<Module> GetPublicByUserId(int userId)
-        {
-            return _context.Modules.Where(x => x.IsPublic && x.UserId == userId);
-        }
-
         public bool Update(Module moduleParam)
         {
             var module = _context.Modules.Find(moduleParam.Id);
@@ -87,6 +77,16 @@ namespace Lern.API.Services
 
             _context.Modules.Update(module);
             return _context.SaveChanges() == 1;
+        }
+
+        public IEnumerable<Module> GetAllPublicModules()
+        {
+            return _context.Modules.Where(x => x.IsPublic);
+        }
+
+        public IEnumerable<Module> GetUsersModules(int userId)
+        {
+            return _context.Modules.Where(x => x.IsPublic && x.UserId == userId);
         }
     }
 }

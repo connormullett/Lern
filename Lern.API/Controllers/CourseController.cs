@@ -62,7 +62,7 @@ namespace Lern.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var courses = _courseService.GetAll();
+            var courses = _courseService.GetAllPublicCourses();
             var model = _mapper.Map<IEnumerable<CourseListItemModel>>(courses);
             return Ok(model);
         }
@@ -82,19 +82,19 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("public/{userId}")]
-        public IActionResult GetPublicByUserId(int userId)
-        {
-            var courses = _courseService.GetPublicByUserId(userId);
-            var model = _mapper.Map<IEnumerable<CourseListItemModel>>(courses);
-            return Ok(model);
-        }
-
-        [AllowAnonymous]
         [HttpGet("user/{userId}")]
         public IActionResult GetCourseByUserId(int userId)
         {
             var courses = _courseService.GetByUserId(userId);
+            var model = _mapper.Map<IEnumerable<CourseListItemModel>>(courses);
+            return Ok(model);
+        }
+
+        [HttpGet("me")]
+        public IActionResult GetUsersCourses()
+        {
+            var userId = GetUserId();
+            var courses = _courseService.GetUserCourses(userId);
             var model = _mapper.Map<IEnumerable<CourseListItemModel>>(courses);
             return Ok(model);
         }

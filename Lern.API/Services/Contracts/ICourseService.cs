@@ -10,11 +10,12 @@ namespace Lern.API.Services.Contracts
     {
         Course Create(Course model);
         Course GetById(int id);
-        IEnumerable<Course> GetAll();
+        IEnumerable<Course> GetAllPublicCourses();
+        IEnumerable<Course> GetUserCourses(int userId);
         bool Update(Course courseParam);
         bool Delete(int id);
-        IEnumerable<Course> GetPublicByUserId(int userId);
         bool CourseTitleIsTaken(string title);
-        object GetByUserId(int userId);
+        IEnumerable<Course> GetByUserId(int userId);
+        IEnumerable<Course> GetAll();
     }
 }

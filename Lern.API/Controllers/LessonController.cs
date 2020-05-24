@@ -77,15 +77,6 @@ namespace Lern.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("public/{userId}")]
-        public IActionResult GetPublicByUserId(int userId)
-        {
-            var lessons = _lessonService.GetPublicByUserId(userId);
-            var model = _mapper.Map<IEnumerable<LessonListModel>>(lessons);
-            return Ok(model);
-        }
-
-        [AllowAnonymous]
         [HttpGet("module/{moduleId}")]
         public IActionResult GetLessonsByModuleId(int moduleId)
         {

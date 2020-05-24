@@ -43,9 +43,16 @@ namespace Lern.API.Services
             return _context.Posts;
         }
 
-        public Post GetById(int id)
+        public Post GetById(int id, int userId)
         {
-            return _context.Posts.Find(id);
+            var entity = _context.Posts.Find(id);
+
+            if (entity == null)
+                throw new AppException("Post not found");
+
+            if (entity.IsPublic || entity.UserId != userId)
+                throw new AppException("Access Denied");
+            else return entity;
         }
 
         public IEnumerable<Post> GetPostsByUserId(int userId)

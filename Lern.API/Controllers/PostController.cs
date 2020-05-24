@@ -67,9 +67,18 @@ namespace Lern.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var post = _postService.GetById(id);
-            var model = _mapper.Map<PostModel>(post);
-            return Ok(model);
+            var userId = GetUserId();
+
+            try
+            {
+                var post = _postService.GetById(id, userId);
+                var model = _mapper.Map<PostModel>(post);
+                return Ok(model);
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [AllowAnonymous]

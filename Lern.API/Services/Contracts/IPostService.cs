@@ -9,7 +9,7 @@ namespace Lern.API.Services.Contracts
     public interface IPostService
     {
         bool Create(Post model);
-        Post GetById(int id);
+        Post GetById(int id, int userId);
         bool Update(Post postParam);
         bool Delete(int id);
         IEnumerable<Post> GetAll();

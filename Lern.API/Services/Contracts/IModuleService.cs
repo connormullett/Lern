@@ -13,8 +13,8 @@ namespace Lern.API.Services.Contracts
         IEnumerable<Module> GetAll();
         bool Update(Module moduleParam);
         bool Delete(int id);
-        IEnumerable<Module> GetPublicByUserId(int userId);
-        IEnumerable<Module> GetPublicByCourseId(int courseId);
         IEnumerable<Module> GetModulesByCourseId(int courseId);
+        IEnumerable<Module> GetAllPublicModules();
+        IEnumerable<Module> GetUsersModules(int userId);
     }
 }

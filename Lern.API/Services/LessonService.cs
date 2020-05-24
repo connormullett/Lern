@@ -49,6 +49,16 @@ namespace Lern.API.Services
             return _context.Lessons;
         }
 
+        public IEnumerable<Lesson> GetAllPublicLessons()
+        {
+            return _context.Lessons.Where(x => x.IsPublic);
+        }
+
+        public IEnumerable<Lesson> GetUsersLessons(int userId)
+        {
+            return _context.Lessons.Where(x => x.IsPublic && x.UserId == userId);
+        }
+
         public Lesson GetById(int id)
         {
             var lesson = _context.Lessons.Find(id);
@@ -67,11 +77,6 @@ namespace Lern.API.Services
 
             _context.Lessons.Update(lesson);
             return _context.SaveChanges() == 1;
-        }
-
-        public IEnumerable<Lesson> GetPublicByUserId(int userId)
-        {
-            return _context.Lessons.Where(x => x.IsPublic && x.UserId == userId);
         }
 
         public IEnumerable<Lesson> GetLessonsByModuleId(int moduleId)
