@@ -95,7 +95,7 @@ namespace Lern.API.Controllers
         public IActionResult Update(int id, [FromBody]PostUpdateModel model)
         {
             var userId = GetUserId();
-            var existingModel = _postService.GetById(id);
+            var existingModel = _postService.GetById(id, userId);
 
             if (userId != existingModel.UserId)
                 return Unauthorized();
@@ -125,7 +125,7 @@ namespace Lern.API.Controllers
         public IActionResult Delete(int id)
         {
             var userId = GetUserId();
-            var existingModel = _postService.GetById(id);
+            var existingModel = _postService.GetById(id, userId);
 
             if (userId != existingModel.UserId)
                 return Unauthorized();
