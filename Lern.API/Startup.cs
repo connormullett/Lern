@@ -90,6 +90,7 @@ namespace Lern.API
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IPostService, PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

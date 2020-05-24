@@ -9,6 +9,7 @@ using Lern.API.Models.Lesson;
 using Lern.API.Models;
 using Lern.API.Models.Module;
 using Lern.API.Models.Course;
+using Lern.API.Models.Posts;
 
 namespace Lern.API.Helpers
 {
@@ -39,6 +40,12 @@ namespace Lern.API.Helpers
             CreateMap<CourseUpdateModel, Course>();
             CreateMap<CourseModel, Course>();
             CreateMap<Course, CourseModel>();
+
+            CreateMap<PostCreateModel, Post>();
+            CreateMap<Post, PostListItemModel>();
+            CreateMap<PostUpdateModel, Post>();
+            CreateMap<PostModel, Post>();
+            CreateMap<Post, PostModel>();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Lern.API.Helpers
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
         }
 
+        public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Module> Modules { get; set; }
